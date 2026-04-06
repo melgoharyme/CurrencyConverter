@@ -22,13 +22,13 @@ It allows converting amounts between multiple currencies with a clean, minimal i
 - Click Convert to see the converted result.
 - Click Clear to reset all fields.
 
-## Technologies Used
+### Technologies Used
 
 - C#
 - WinUI 3 (.NET 10)
 - XAML for UI
 
-## Notes
+### Notes
 
 - This is a static converter: currency rates are hardcoded.
 - For live rates, integration with a currency API (like ExchangeRate API) would be needed.
