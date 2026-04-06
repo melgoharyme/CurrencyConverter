@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "CurrencyConverter (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "CurrencyConverter (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

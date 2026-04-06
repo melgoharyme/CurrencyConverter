@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window
+    x:Class="CurrencyConverter.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CurrencyConverter"
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="Currency Converter">
+
+    <Window.SystemBackdrop>
+        <MicaBackdrop />
+    </Window.SystemBackdrop>
+
+    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Padding="24" Background="{ThemeResource CardBackgroundFillColorDefault}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0">
+                <TextBlock Text="Currency Converter" TextAlignment="Left" Margin="0,0,0,12" Style="{StaticResource TitleTextBlockStyle}"/>
+                <TextBlock Name="lblResult" TextAlignment="Left" Margin="0,0,0,12" Style="{StaticResource SubtitleTextBlockStyle}" Foreground="{ThemeResource SystemFillColorSuccessBrush}" Visibility="Collapsed"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1">
+                <TextBox Name="txtAmount" Header="Enter amount:" PlaceholderText="1.00" Margin="0,0,0,16"/>
+                <TextBlock Name="txtAmountError" Text="Please Enter a Currency!" Margin="0,0,0,12" Visibility="Collapsed" Foreground="{ThemeResource SystemFillColorCriticalBrush}"/>
+            </StackPanel>
+
+            <Grid Grid.Row="2" ColumnSpacing="12">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <ComboBox x:Name="cmbFromCurrency" Grid.Column="0" Header="From" PlaceholderText="Pick a currency" HorizontalAlignment="Stretch" DisplayMemberPath="Text" SelectedValuePath="Value"/>
+                    <TextBlock Name="cmbFromCurrencyError" Text="Please Select Currency!" Margin="0,12,0,0" Visibility="Collapsed" Foreground="{ThemeResource SystemFillColorCriticalBrush}"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+                    <ComboBox x:Name="cmbToCurrency" Grid.Column="1" Header="To" PlaceholderText="Pick a currency" HorizontalAlignment="Stretch" DisplayMemberPath="Text" SelectedValuePath="Value"/>
+                    <TextBlock Name="cmbToCurrencyError" Text="Please Select Currency!" Margin="0,12,0,0" Visibility="Collapsed" Foreground="{ThemeResource SystemFillColorCriticalBrush}"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="1" Padding="24" ColumnSpacing="12" Background="{ThemeResource CardStrokeColorDefault}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Content="Convert" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}" Click="OnConvertClicked"/>
+            <Button Grid.Column="1" Content="Clear" HorizontalAlignment="Stretch" Style="{StaticResource DefaultButtonStyle}" Click="OnClearClicked"/>
+        </Grid>
+
+    </Grid>
+</Window>
