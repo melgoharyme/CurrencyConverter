@@ -32,18 +32,57 @@ public sealed partial class MainWindow : Window
     {
         var dtCurrency = new[]
         {
-        new { Text = "Select Currency", Value = 0.0 },
-        new { Text = "US Dollar", Value = 54.3860 },
-        new { Text = "Egyptian Pound", Value = 1.0 },
-        new { Text = "Euro", Value = 62.8213 },
-        new { Text = "Pound Sterling", Value = 72.0506 },
-        new { Text = "Swiss Franc", Value = 68.1871 },
-        new { Text = "Japanese Yen", Value = 34.1021 },
-        new { Text = "Saudi Riyal", Value = 14.4856 },
-        new { Text = "Kuwaiti Dinar", Value = 177.1531 },
-        new { Text = "UAE Dirham", Value = 14.8033 },
-        new { Text = "Chinese yuan", Value = 7.9017 }
-    };
+        new { Text = "Select Currency", Value = "" },
+        new { Text = "USD", Value = "USD" },
+        new { Text = "EGP", Value = "EGP" },
+        new { Text = "EUR", Value = "EUR" },
+        new { Text = "GBP", Value = "GBP" },
+        new { Text = "SAR", Value = "SAR" },
+        new { Text = "AED", Value = "AED" },
+        new { Text = "KWD", Value = "KWD" },
+        new { Text = "QAR", Value = "QAR" },
+        new { Text = "BHD", Value = "BHD" },
+        new { Text = "OMR", Value = "OMR" },
+        new { Text = "JOD", Value = "JOD" },
+        new { Text = "JPY", Value = "JPY" },
+        new { Text = "CNY", Value = "CNY" },
+        new { Text = "INR", Value = "INR" },
+        new { Text = "KRW", Value = "KRW" },
+        new { Text = "TRY", Value = "TRY" },
+        new { Text = "CAD", Value = "CAD" },
+        new { Text = "AUD", Value = "AUD" },
+        new { Text = "NZD", Value = "NZD" },
+        new { Text = "CHF", Value = "CHF" },
+        new { Text = "SEK", Value = "SEK" },
+        new { Text = "NOK", Value = "NOK" },
+        new { Text = "DKK", Value = "DKK" },
+        new { Text = "PLN", Value = "PLN" },
+        new { Text = "CZK", Value = "CZK" },
+        new { Text = "HUF", Value = "HUF" },
+        new { Text = "RON", Value = "RON" },
+        new { Text = "BGN", Value = "BGN" },
+        new { Text = "RUB", Value = "RUB" },
+        new { Text = "UAH", Value = "UAH" },
+        new { Text = "BRL", Value = "BRL" },
+        new { Text = "MXN", Value = "MXN" },
+        new { Text = "ARS", Value = "ARS" },
+        new { Text = "CLP", Value = "CLP" },
+        new { Text = "COP", Value = "COP" },
+        new { Text = "PEN", Value = "PEN" },
+        new { Text = "ZAR", Value = "ZAR" },
+        new { Text = "NGN", Value = "NGN" },
+        new { Text = "KES", Value = "KES" },
+        new { Text = "SGD", Value = "SGD" },
+        new { Text = "HKD", Value = "HKD" },
+        new { Text = "TWD", Value = "TWD" },
+        new { Text = "THB", Value = "THB" },
+        new { Text = "MYR", Value = "MYR" },
+        new { Text = "PHP", Value = "PHP" },
+        new { Text = "IDR", Value = "IDR" },
+        new { Text = "PKR", Value = "PKR" },
+        new { Text = "BDT", Value = "BDT" },
+        new { Text = "LKR", Value = "LKR" }
+        };
 
         cmbFromCurrency.ItemsSource = dtCurrency;
         cmbFromCurrency.DisplayMemberPath = "Text";
@@ -57,7 +96,7 @@ public sealed partial class MainWindow : Window
 
     }
 
-    private void OnConvertClicked(object sender, RoutedEventArgs e)
+    private async void OnConvertClicked(object sender, RoutedEventArgs e)
     {
         if (string.IsNullOrWhiteSpace(txtAmount.Text) || !double.TryParse(txtAmount.Text, out double inputAmount))
         {
@@ -80,20 +119,35 @@ public sealed partial class MainWindow : Window
         }
         cmbToCurrencyError.Visibility = Visibility.Collapsed;
 
-        double sourceRate = Convert.ToDouble(cmbFromCurrency.SelectedValue);
-        double targetRate = Convert.ToDouble(cmbToCurrency.SelectedValue);
+        var fromCurrency = cmbFromCurrency.SelectedValue as string;
+        var toCurrency = cmbToCurrency.SelectedValue as string;
 
-        double convertedAmount;
+        if (string.IsNullOrWhiteSpace(fromCurrency))
+        {
+            cmbFromCurrencyError.Visibility = Visibility.Visible;
+            return;
+        }
 
-        if (sourceRate == targetRate)
-            convertedAmount = inputAmount;
-        else
-            convertedAmount = (inputAmount * sourceRate) / targetRate;
+        if (string.IsNullOrWhiteSpace(toCurrency))
+        {
+            cmbToCurrencyError.Visibility = Visibility.Visible;
+            return;
+        }
+
+        var service = new Services.ExchangeRateService();
+        var ratesResponse = await service.GetLatestRatesAsync(fromCurrency);
+
+        double rate = ratesResponse.ConversionRates[toCurrency];
+
+        double convertedAmount = inputAmount * rate;
+
+        double targetRate = Convert.ToDouble(rate);
 
         var sourceCurrencyName = ((dynamic)cmbFromCurrency.SelectedItem).Text;
         var targetCurrencyName = ((dynamic)cmbToCurrency.SelectedItem).Text;
 
-        lblResult.Text = $"{inputAmount} {sourceCurrencyName} = {convertedAmount:N2} {targetCurrencyName} ";
+
+        lblResult.Text = $"{inputAmount} {sourceCurrencyName} = {convertedAmount:N4} {targetCurrencyName} ";
         lblResult.Visibility = Visibility.Visible;
     }
 

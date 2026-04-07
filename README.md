@@ -1,11 +1,11 @@
-## Currency Converter
+## Currency Converter WinUI 3 & ExchangeRate API
 
-A simple static currency converter desktop app built using WinUI 3.
+A simple, uptime and reliable currency converter desktop app built using WinUI 3 that integrates live currency rates via ExchangeRate API.
 It allows converting amounts between multiple currencies with a clean, minimal interface.
 
 ### Features
 
-- Convert between multiple currencies (USD, EUR, GBP, JPY, etc.)
+- Convert between multiple uptime currencies (USD, EUR, GBP, JPY, etc.)
 - Input validation for amount
 - Error messages for invalid inputs
 - Reset/Clear all fields
@@ -27,8 +27,10 @@ It allows converting amounts between multiple currencies with a clean, minimal i
 - C#
 - WinUI 3 (.NET 10)
 - XAML for UI
+- ExchangeRate API
 
-## Notes
+## **Notes**
 
-- This is a static converter: currency rates are hardcoded.
-- For live rates, integration with a currency API (like ExchangeRate API) would be needed.
+- Replace `YOUR-API-KEY` to your ExchangeRate API. 
+- API Docs: [ExchangeRate API Documentation](https://www.exchangerate-api.com/docs/standard-requests)
+- List of currency codes and countries supported: [Supported Currencies](https://www.exchangerate-api.com/docs/supported-currencies)
