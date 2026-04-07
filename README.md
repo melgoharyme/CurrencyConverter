@@ -22,14 +22,14 @@ It allows converting amounts between multiple currencies with a clean, minimal i
 - Click Convert to see the converted result.
 - Click Clear to reset all fields.
 
-## Technologies Used
+### Technologies Used
 
 - C#
 - WinUI 3 (.NET 10)
 - XAML for UI
 - ExchangeRate API
 
-## **Notes**
+## Notes
 
 - Replace `YOUR-API-KEY` to your ExchangeRate API. 
 - API Docs: [ExchangeRate API Documentation](https://www.exchangerate-api.com/docs/standard-requests)
